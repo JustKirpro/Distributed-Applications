@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Normalization.Client</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Grpc.Net.Client" Version="2.50.0" />
+      <PackageReference Include="System.Data.SQLite" Version="1.0.117" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Normalization\Normalization.csproj" />
+    </ItemGroup>
+
+</Project>
