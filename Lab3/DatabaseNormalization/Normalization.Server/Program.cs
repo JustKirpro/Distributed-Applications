@@ -11,7 +11,7 @@ public static class Program
     {
         PostgresqlDatabase.CreateDatabaseSchema();
         
-        var hostName = ConfigurationManager.AppSettings.Get("Hostname");
+        var hostName = ConfigurationManager.AppSettings.Get("HostName");
         var port = Convert.ToInt32(ConfigurationManager.AppSettings.Get("Port"));
 
         var server = new Grpc.Core.Server

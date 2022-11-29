@@ -14,7 +14,15 @@ public static class PostgresqlDatabase
     /// <summary>
     /// <exception cref="NpgsqlException"> PostgreSQL database problem has occured. </exception>
     /// </summary>
-    public static void InsertRecord(Record record)
+    public static void InsertRecords(List<Record> records)
+    {
+        foreach (var record in records)
+        {
+            InsertRecord(record);
+        }
+    }
+    
+    private static void InsertRecord(Record record)
     {
         var connectionString = BaseConnectionString + $";Database={DatabaseName};";
     

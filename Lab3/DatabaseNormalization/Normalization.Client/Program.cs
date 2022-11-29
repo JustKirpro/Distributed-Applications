@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Threading.Tasks;
 using Grpc.Core;
 using Normalization.Client.Database;
 
@@ -7,9 +8,9 @@ namespace Normalization.Client;
 
 public static class Program
 {
-    public static void Main()
+    public static async Task Main()
     {
-        var hostName = ConfigurationManager.AppSettings.Get("Hostname");
+        var hostName = ConfigurationManager.AppSettings.Get("HostName");
         var port = Convert.ToInt32(ConfigurationManager.AppSettings.Get("Port"));
         
         var records = SqliteDatabase.ReadRecords();
@@ -19,11 +20,16 @@ public static class Program
 
         try
         {
-            for (var i = 0; i < records.Count; i++)
-            {
-                var reply = client.Normalize(records[i]);
-                Console.WriteLine(reply.IsSuccessful ? $"Record #{i + 1} successfully inserted" : "An insertion error has occured");
+            var stream=client.Normalize();
+            
+            foreach (var record in records)
+            {  
+                await stream.RequestStream.WriteAsync(record);
             }
+
+            await stream.RequestStream.CompleteAsync();
+            await stream.ResponseAsync;
+            Console.WriteLine("Records successfully inserted");
         }
         catch (Exception)
         {

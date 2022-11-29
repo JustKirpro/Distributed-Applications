@@ -5,7 +5,7 @@ option csharp_namespace = "Normalization.Server";
 package normalization;
 
 service Normalization {
-  rpc Normalize(DatabaseRecord) returns (NormalizationReply);
+  rpc Normalize(stream DatabaseRecord) returns (NormalizationReply);
 }
 
 message DatabaseRecord {
